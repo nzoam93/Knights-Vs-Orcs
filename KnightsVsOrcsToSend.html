@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knights Vs Orcs</title>
+    <style>
+		body {
+		  background-color: lightblue;
+		}
+
+		h1 {
+		  color: blue;
+		  text-align: left;
+		}
+
+		p {
+		  font-family: verdana;
+		  font-size: 20px;
+		  color: white;
+		}
+		#boundingBox{
+		   position: absolute;
+		   top: 150px;
+		   left: 0px;
+		   width: 320px;
+		   height: 450px;
+		   border: 3px solid #73AD21;
+		   background-color: mediumspringgreen;
+		   background-image: url("Image_Background.png");
+		}
+		#playerName{
+		   position: absolute;
+		   top: 120px;
+		   left: 10px;
+		   width: 105px;
+		}
+		#playButton{
+			position: absolute;
+			top: 120px;
+			left: 130px;
+		}
+		#pauseButton{
+			position: absolute;
+			top: 120px;
+			left: 215px;
+		}
+		#knight{
+		   position: absolute;
+		   top: 350px;
+		   left: 135px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#orc1{
+		   position: absolute;
+		   top: 210px;
+		   left: 60px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#orc2{
+		   position: absolute;
+		   top: 300px;
+		   left: 230px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#orc3{
+		   position: absolute;
+		   top: 500px;
+		   left: 200px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#apple1{
+		   position: absolute;
+		   top: 265px;
+		   left: 25px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#apple2{
+		   position: absolute;
+		   top: 480px;
+		   left: 35px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#apple3{
+		   position: absolute;
+		   top: 450px;
+		   left: 135px;
+		   width: 50px;
+		   height: 50px;
+		}
+		#apple4{
+		   position: absolute;
+		   top: 200px;
+		   left: 200px;
+		   width: 50px;
+		   height: 50px;
+		}
+
+		#thoughts{
+		   position: absolute;
+		   top: 150px;
+		   left: 400px;
+		   width: 200px;
+		   height: 150px;
+		   border: 3px solid #73AD21;
+		}
+		
+		#fastButton{
+		   position: absolute;
+		   top: 550px;
+		   left: 10px;
+		   color: lightseagreen;
+		   background-color: black;
+		}
+		#mediumButton{
+		   position: absolute;
+		   top: 550px;
+		   left: 110px;
+		   color: yellow;
+		   background-color: black;
+		}
+		#slowButton{
+		   position: absolute;
+		   top: 550px;
+		   left: 230px;
+		   color: orangered;
+		   background-color: black;
+		}
+		#startButton{
+		   position: absolute;
+		   top: 575px;
+		   left: 120px;
+		}
+		#restartButton{
+		   position: absolute;
+		   top: 575px;
+		   left: 120px;
+		}
+		
+
+		</style>
+</head>
+
+<body>
+	<h1> Welcome to Knights Vs. Orcs! </h1>
+	<p> Collect the apples; avoid the orcs! </p>
+
+	<div id="boundingBox"> 
+		<p id="score" > Please select your speed and then click "start game". Use the arrow keys to move your knight. </p>
+	</div>
+	<img id ="knight" hidden src="Image_Knight.png" width = "50" height = "50"> 
+	<img id ="orc1" hidden src="Image_Orc.png" width = "50" height="50">
+	<img id ="orc2" hidden src="Image_Orc.png" width = "50" height="50">
+	<img id ="orc3" hidden src="Image_Orc.png" width = "50" height="50">
+	<img id ="apple1" hidden src="Image_Apple.png" width = "50" height="50">
+	<img id ="apple2" hidden src="Image_Apple.png" width = "50" height="50">
+	<img id ="apple3" hidden src="Image_Apple.png" width = "50" height="50">
+	<img id ="apple4" hidden src="Image_Apple.png" width = "50" height="50">
+	<div id = "thoughts">
+		<h4> My thoughts as a knight: </h4>
+
+		<ul>
+			<li> Apples are yummy </li>
+			<li> Orcs are scary! </li>
+			<li> Make sure not to click anywhere after clicking "start game" </li>
+		</ul>
+	</div>	
+
+<!-- This starts the code on the click of the start button -->
+	<button id ="startButton" onclick="newGame()"> Start Game</button>
+	<button id = "restartButton" onclick="newGame()" hidden> Restart Game </button>
+
+
+	<button id ="fastButton" onclick="fastGame()"> Fast Game </button>
+	<button id ="mediumButton" onclick="mediumGame()"> Medium Game </button>
+	<button id ="slowButton" onclick="slowGame()"> Slow Game </button>
+
+	<input type="text" id="playerName" placeholder="Input your name!">
+	<button id ="playButton" onclick="playBackgroundMusic()"> Play Music </button>
+	<button id ="pauseButton" onclick="pauseBackgroundMusic()"> Pause Music </button>
+
+	
+</body>
+
+
+
+
+
+
+<script>
+
+	//functionality to add includes
+	    //music
+	    //high score
+	    //end of the timed loop
+
+//variables that will be adapted later 
+var score = 0;
+var highscore = 0;
+var gameSpeed = 50;
+var checkTimedLoop = 0;
+
+
+//how fast the game should run. Used by the setInterval function
+function fastGame(){
+	gameSpeed = 30;
+}
+
+function mediumGame(){
+	gameSpeed = 60;
+}
+
+function slowGame(){
+	gameSpeed = 80;
+}
+
+
+//these two functions work together to create a timed loop that runs the moveObject function
+function newGame(){
+	document.getElementById("boundingBox").style.backgroundColor="mediumspringgreen";
+  document.getElementById("boundingBox").style.backgroundImage = "url('Image_Background.png')";
+	//hide the buttons on the homescreen
+	document.getElementById("fastButton").style.display="none";
+	document.getElementById("mediumButton").style.display="none";
+	document.getElementById("slowButton").style.display="none";
+
+	//prepare the score field
+	score = 0;
+	document.getElementById("score").innerHTML = "Score: " + score; 
+
+	//set the position of the knight
+	document.getElementById("knight").style.display = "block";
+	document.getElementById("knight").style.width = "50px";
+	document.getElementById("knight").style.height = "50px";
+	document.getElementById("knight").style.top = "350px";
+	document.getElementById("knight").style.left = "135px";
+
+	//set the position of the apples
+	for(var i=1; i<=4; i++){
+		document.getElementById("apple" + i).style.display = "block";
+		var randomX = Math.floor((Math.random() * 270));
+  		var randomY = Math.floor((Math.random() * 470));
+  		document.getElementById("apple" + i).style.left=randomX + "px";
+  		document.getElementById("apple" + i).style.top=randomY + "px";
+  	}
+
+  	//set the position of the orcs
+  	document.getElementById("orc1").style.display = "block";
+  	document.getElementById("orc1").style.top = "210px";
+	document.getElementById("orc1").style.left = "80px";
+	document.getElementById("orc2").style.display = "block";
+  	document.getElementById("orc2").style.top = "300px";
+	document.getElementById("orc2").style.left = "230px";
+	document.getElementById("orc3").style.display = "block";
+  	document.getElementById("orc3").style.top = "500px";
+	document.getElementById("orc3").style.left = "200px";
+	
+	//set the timed loop. The if loops ensures that it only does it once regardless of how many times the button is pressed.
+	if(checkTimedLoop==0){
+		var timedLoop = setInterval(constantMovement,gameSpeed);
+		checkTimedLoop++;
+	}
+}
+
+//moves the objects according to the moveobject function below
+function constantMovement(){
+	moveObject("orc1",1,1);
+	moveObject("orc2",-1,1);
+	moveObject("orc3",1,-1);
+	moveObject("apple1",1,1)
+	moveObject("apple2",1,2)
+	moveObject("apple3",2,1)
+	moveObject("apple4",1,-1)
+}
+
+
+//moves an object a specified amount in the x and y direction. Then calls wrapAround function
+function moveObject(object,xStep,yStep){
+  var div = document.getElementById(object); //These two lines of code allow html to 
+  var rect = div.getBoundingClientRect();    //access the x,y,width, and height of the object
+  var x = rect.left;
+  var y = rect.top;
+  var newX = x + xStep;
+  var newY = y + yStep;
+  document.getElementById(object).style.left=newX+"px";
+  document.getElementById(object).style.top=newY+"px";
+  wrapAround(object);
+  collisionDetection("apple1",false);
+  collisionDetection("apple2",false);
+  collisionDetection("apple3",false);
+  collisionDetection("apple4",false);
+  collisionDetection("orc1",true);
+  collisionDetection("orc2",true);
+  collisionDetection("orc3",true);
+}
+
+
+
+//wraps the image around the bounding box
+function wrapAround(object){
+  var div = document.getElementById(object);
+  var rect = div.getBoundingClientRect();
+  var objectX = rect.left;
+  var objectY = rect.top;
+  var objectWidth = rect.width;
+  var objectHeight = rect.height;
+
+  if(objectX > 320-objectWidth){
+  	document.getElementById(object).style.left=0 +"px";
+  }
+  if(objectX  < 0){
+  	document.getElementById(object).style.left=320-objectWidth + "px";
+  }
+  if(objectY > 600-objectHeight){
+  	document.getElementById(object).style.top=150 + "px";
+  }
+  if(objectY  < 150){
+  	document.getElementById(object).style.top=600 -objectHeight + "px";
+  }
+}
+
+
+
+//onEvent listener for the knight movement. works when you are still within the START or RESTART game box
+document.getElementById("startButton").onkeydown = function(event) {knightMove()};
+document.getElementById("restartButton").onkeydown = function(event) {knightMove()};
+
+
+function knightMove() {
+  var div = document.getElementById("knight");
+  var rect = div.getBoundingClientRect();
+  var knightX = rect.left;
+  var knightY = rect.top;
+  var knightWidth = rect.width;
+  var knightHeight = rect.height;
+  var knightSpeed = 15;
+	if(event.keyCode =="37"){ //left
+		 document.getElementById("knight").style.left = knightX - knightSpeed + "px";
+	}
+	if(event.keyCode =="38"){ //up
+		document.getElementById("knight").style.top = knightY - knightSpeed + "px";
+	}
+	if(event.keyCode =="39"){ //right
+		document.getElementById("knight").style.left = knightX + knightSpeed + "px";
+	}
+	if(event.keyCode =="40"){ //down
+		document.getElementById("knight").style.top = knightY + knightSpeed + "px";
+	}
+	wrapAround("knight");
+}
+
+
+function collisionDetection(object, isEnemy){
+  var div = document.getElementById("knight");
+  var rect = div.getBoundingClientRect();
+  var knightX = rect.left;
+  var knightY = rect.top;
+  var knightWidth = rect.width;
+  var knightHeight = rect.height;
+
+  var div = document.getElementById(object);
+  var rect = div.getBoundingClientRect();
+  var objectX = rect.left;
+  var objectY = rect.top;
+  var objectWidth = rect.width;
+  var objectHeight = rect.height;
+
+  if ((knightX + knightWidth > objectX && knightX < objectX + objectWidth) &&
+  (knightY + knightHeight > objectY && knightY < objectY + objectHeight)) {
+  	if(isEnemy == true){
+  		gameOver();		
+  	}
+  	else if(isEnemy == false){
+  		playMunchSound();
+  		updateScore();
+  		var randomX = Math.floor((Math.random() * 270));
+  		var randomY = Math.floor((Math.random() * 470));
+  		document.getElementById(object).style.left=randomX + "px";
+  		document.getElementById(object).style.top=randomY + "px";
+  		
+  		//growing the knight when he eats
+  		newKnightWidth = knightWidth + 2; 
+  		newKnightHeight = knightHeight + 2; 
+  		document.getElementById("knight").style.width = newKnightWidth + "px";
+  		document.getElementById("knight").style.height = newKnightHeight + "px";
+
+  	}
+  }
+}
+
+function updateScore(){
+	score++;
+  	document.getElementById("score").innerHTML = "Score: " + score;
+}
+
+function gameOver(){
+	var nameInput = document.getElementById("playerName").value;
+	playLoseSound();
+	document.getElementById("score").innerHTML = "GAME OVER! " + nameInput + ", you have collected " + score + " apples and then have succumb to the orcs. You may try again if you feel brave.";  	
+	document.getElementById("boundingBox").style.backgroundImage = "url('Image_Orc.png')";
+	document.getElementById("boundingBox").style.backgroundColor="black";
+	//hiding the apples and orcs
+  	for(var i=1; i<=4; i++){
+  		document.getElementById("apple" + i).style.display = "none";
+  	}
+  	for(var i=1; i<=3; i++){
+  		document.getElementById("orc" + i).style.display = "none";
+  	} 	
+  	document.getElementById("startButton").style.display = "none";
+  	document.getElementById("restartButton").style.display = "block";
+
+  	clearInterval(timedLoop);  	
+}
+
+function playMunchSound () {
+	var ding = new Audio("Audio_AppleEatingSound.m4a");
+	ding.play();
+}
+
+function playLoseSound (){
+	var ding = new Audio("Audio_LoseSound.m4a");
+	ding.play();
+}
+
+//plays and pauses background music
+var backgroundMusic = new Audio("Audio_BackgroundMusic.mp3")
+function playBackgroundMusic(){
+    	backgroundMusic.play();
+}
+function pauseBackgroundMusic(){
+	backgroundMusic.pause();
+}
+
+</script>
+</html>
+
+
+
+
+
+
